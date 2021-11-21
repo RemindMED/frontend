@@ -9,8 +9,8 @@
 	align-items: center;
 	padding: 1.2em 1.5em;
 	padding-bottom: 0px;
-	cursor: pointer;
 	transition: 0.3s ease-in-out;
+	cursor: default;
 }
 
 .user-card:hover {
@@ -57,15 +57,16 @@
 }
 
 
-
+/* 
 .user-card i:hover {
-transform: scale(1.25);}
+transform: scale(1.25);} */
 
 .user-card .image-wrapper {
 	border-radius: 50%;
 	height: 100px;
 	width: 100px;
 	margin-bottom: 10%;
+	cursor: pointer;
 }
 .user-card .image-wrapper img {
 	border-radius: 50%;

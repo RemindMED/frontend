@@ -1,22 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
-.adminContainer {
-    display: grid;
-    background-color: #f6f6fa;
-    height: 93vh;
-    overflow: auto;
-
+.container {
+	background-color: #f6f6fa;
+	height: 100vh;
 }
 
+.adminContainer {
+	display: grid;
+	background-color: #f6f6fa;
+	overflow: auto;
+}
 
 .adminTitle {
 	font-family: FontAwesome, "Raleway", sans-serif;
-	font-size: 30px;
+	font-size: 2em;
 	font-weight: bold;
 	grid-row: 1;
 	display: grid;
 	grid-template-columns: 50%, 50%;
-	margin-top: 9%;
+	margin-top: 5vh;
+	height: 8vh;
 }
 
 .adminTitle1 {
@@ -33,7 +36,8 @@
 
 .btnGuardarAdmin {
 	grid-row: 2;
-	padding: 5% 5% 0 0;
+	padding: 1vh 5% 0 0;
+	height: 5vh;
 }
 
 .btnGuardarAdmin button {
@@ -44,10 +48,8 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 	grid-gap: 20px;
-    margin-top: 20px;
-    background-color: #f6f6fa;
-    padding: 2% 5% 5% 5%;
+	margin-top: 20px;
+	background-color: #f6f6fa;
+	padding: 2% 2vh 5% 2vh;
 	grid-row: 3;
 }
-
-

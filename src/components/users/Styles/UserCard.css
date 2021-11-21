@@ -58,8 +58,8 @@
 
 
 
-.user-card i:hover {
-transform: scale(1.25);}
+/* .user-card i:hover {
+transform: scale(1.25);} */
 
 .user-card .image-wrapper {
 	border-radius: 50%;

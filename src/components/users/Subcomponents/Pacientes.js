@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../Styles/AdminInfo.css";
 import UserCard from "./UserCard.js";
 import ModalAdmin from "./ModalAdmin";
+import ModalUserInfo from "./ModalUserInfo";
 import ModalBorrarUsuario from "./ModalBorrarUsuario";
 import ModalBorrarUsuarioCon from "./ModalBorrarUsuarioCon";
 import api from "../../shared_components/APIConfig";
@@ -22,7 +23,7 @@ async function fetchUsers(doctorId) {
 
 async function deleteUser(userID, removeUser) {
 	console.log("userID", userID);
-	var response = await fetch(api.url + "/deletePaciente?id="+userID, {
+	var response = await fetch(api.url + "/deletePaciente?id=" + userID, {
 		method: "delete",
 		headers: { "Content-Type": "application/json" },
 	});
@@ -41,6 +42,7 @@ function Pacientes(props) {
 	const [open, setOpen] = useState(false);
 	const [open2, setOpen2] = useState(false);
 	const [open3, setOpen3] = useState(false);
+	const [open4, setOpen4] = useState(false);
 
 	const [userID, setUserID] = useState("");
 	const [msgDeleteUser, setMsgDeleteUser] = useState("");
@@ -82,6 +84,15 @@ function Pacientes(props) {
 	function openModal3() {
 		setOpen3(true);
 	}
+
+	function closeModal4() {
+		setOpen4(false);
+	}
+
+	function openModal4() {
+		setOpen4(true);
+	}
+
 	function addUser(newUser) {
 		setState((state) => ({
 			users: [newUser, ...state.users],
@@ -110,65 +121,77 @@ function Pacientes(props) {
 	}
 
 	return (
-		<div className="adminContainer">
-			<div className="adminTitle">
-				<div className="adminTitle1">
-					<i className="fa fa-users"></i>
+		<div className="container">
+			<div className="adminContainer">
+				<div className="adminTitle">
+					<div className="adminTitle1">
+						<i className="fa fa-users"></i>
+					</div>
+					<div className="adminTitle2">Mis Pacientes</div>
 				</div>
-				<div className="adminTitle2">Mis Pacientes</div>
-			</div>
 
-			<div className="btnGuardarAdmin">
-				<button
-					className="btn btn-4 btn-sep icon-plus"
-					onClick={() => {
-						setUserID("");
-						setOpen(true);
-					}}
-				>
-					Agregar Paciente
-				</button>
-			</div>
+				<div className="btnGuardarAdmin">
+					<button
+						className="btn btn-4 btn-sep icon-plus"
+						onClick={() => {
+							setUserID("");
+							setOpen(true);
+						}}
+					>
+						Agregar Paciente
+					</button>
+				</div>
 
-			<div className="user-cards">
-				{state.users.map((user) => (
-					<UserCard
-						key={user.id}
-						user={user}
-						openModal={openModal}
-						openModal2={openModal2}
-						changeUserID={changeUserID}
-						removeUser={removeUser}
+				<div className="user-cards">
+					{state.users.map((user) => (
+						<UserCard
+							key={user.id}
+							user={user}
+							openModal={openModal}
+							openModal2={openModal2}
+							openModal4={openModal4}
+							changeUserID={changeUserID}
+							removeUser={removeUser}
+						/>
+					))}
+				</div>
+
+				{open ? (
+					<ModalAdmin
+						closeModal={closeModal}
+						userID={userID}
+						doctorId={props.ID_Usuario}
+						fetchUsers={fetchUsers}
+						modifyUser={modifyUser}
+						addUser={addUser}
 					/>
-				))}
+				) : null}
+				{open2 ? (
+					<ModalBorrarUsuario
+						closeModal2={closeModal2}
+						userID={userID}
+						removeUser={removeUser}
+						deleteUser={deleteUser}
+						setMsgDeleteUser={setMsgDeleteUser}
+						openModal3={openModal3}
+					/>
+				) : null}
+				{open3 ? (
+					<ModalBorrarUsuarioCon
+						closeModal3={closeModal3}
+						msgDeleteUser={msgDeleteUser}
+					/>
+				) : null}
+				{open4 ? (
+					<ModalUserInfo
+						closeModal={closeModal4}
+						openModal={openModal4}
+						userID={userID}
+						doctorId={props.ID_Usuario}
+						fetchUsers={fetchUsers}
+					/>
+				) : null}
 			</div>
-
-			{open ? (
-				<ModalAdmin
-					closeModal={closeModal}
-					userID={userID}
-					doctorId={props.ID_Usuario}
-					fetchUsers={fetchUsers}
-					modifyUser={modifyUser}
-					addUser={addUser}
-				/>
-			) : null}
-			{open2 ? (
-				<ModalBorrarUsuario
-					closeModal2={closeModal2}
-					userID={userID}
-					removeUser={removeUser}
-					deleteUser={deleteUser}
-					setMsgDeleteUser={setMsgDeleteUser}
-					openModal3={openModal3}
-				/>
-			) : null}
-			{open3 ? (
-				<ModalBorrarUsuarioCon
-					closeModal3={closeModal3}
-					msgDeleteUser={msgDeleteUser}
-				/>
-			) : null}
 		</div>
 	);
 }

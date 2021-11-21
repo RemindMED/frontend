@@ -78,7 +78,7 @@ function MenuUsuario(props) {
 					<div className="sideBarIcon">
 						<i
 							style={{ color: foregroundState.btnCitas }}
-							className="fa fa-address-book fa-2x iconUsuario"
+							className="fa fa-calendar fa-2x iconUsuario"
 						></i>
 					</div>
 					<div className="sideBarBtn">

@@ -3,8 +3,8 @@
 .menuUsuarioContainer {
     background-color: white;
     display: grid;
-    height: 90vh;
-    grid-template-columns: 30% 70%;
+    height: 100vh;
+    grid-template-columns: 15% 85%;
     font-family: FontAwesome, 'Raleway', sans-serif;
 }
 
@@ -14,7 +14,6 @@
     grid-column: 1;
     display: list-item;
     padding-top: 10vh;
-    background-color: white;
 }
 
 .sideBarBlock {
@@ -29,7 +28,7 @@
     grid-column: 1;
     align-self: center;
     justify-self: center;
-    margin-left: 50%;
+    margin-left: 25%;
 }
 
 .sideBarBtn {
