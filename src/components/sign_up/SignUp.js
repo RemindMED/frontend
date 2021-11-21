@@ -8,7 +8,6 @@ import Alert from "@material-ui/lab/Alert";
 import api from "../shared_components/APIConfig";
 
 async function fetchData(state) {
-	console.log(state);
 	var response = await fetch(api.url + "/signUp", {
 		method: "post",
 		headers: { "Content-Type": "application/json" },
@@ -67,7 +66,9 @@ function SignUp(props) {
 						severity="error"
 					>
 						<AlertTitle>Error</AlertTitle>
-						{alertState.msg}
+						<div
+							dangerouslySetInnerHTML={{ __html: alertState.msg }}
+						></div>
 					</Alert>
 				</Collapse>
 			</div>
@@ -277,8 +278,9 @@ function SignUp(props) {
 												);
 												const json = await data.json();
 
+												console.log(json);
+
 												if (data.status === 200) {
-													console.log("jsonnnn", json);
 													props.saveUserSession(
 														json.doctorId,
 														true
@@ -287,13 +289,14 @@ function SignUp(props) {
 
 													handleClick();
 												} else if (
-													data.status === 404 || data.status === 400
+													data.status === 404 ||
+													data.status === 400
 												) {
 													console.log(json);
 													setAlertState({
 														...alertState,
 														openError: true,
-														msg: json
+														msg: json,
 													});
 												} else {
 													setAlertState({

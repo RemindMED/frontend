@@ -56,6 +56,9 @@ function Login(props) {
 						}}
 						variant="outlined"
 						severity="error"
+						style={{
+							position: "absolute",
+						}}
 					>
 						<AlertTitle>Error</AlertTitle>
 						{alertState.msg}
@@ -241,6 +244,12 @@ function Login(props) {
 									No tiene una cuenta?{" "}
 									<span href="#" onClick={() => goToSignUp()}>
 										Reqistrate
+									</span>
+								</span>
+								<span className="goToSignUp">
+									Olvidaste tu contraseña? {"    "} Contáctanos{" "}
+									<span style={{cursor:"default"}}>
+										+52 (33) 1074 3933
 									</span>
 								</span>
 

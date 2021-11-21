@@ -2,8 +2,10 @@
 	background: #fff;
 	display: flex;
 	width: 100%;
-	min-height: 100vh;
+	min-height: 85vh;
+	max-height: 85vh;
 	overflow: hidden;
+	z-index: 0;
 }
 
 .login-label > label {
@@ -230,8 +232,10 @@ a.ssolink {
 
 .alertLogin {
 	text-align: start;
-	position: relative;
+	position: absolute;
 	width: 100vw;
+	z-index: 20;
+	background-color: rgba(255, 255, 255, 0.9);
 }
 
 .fieldLogin {
