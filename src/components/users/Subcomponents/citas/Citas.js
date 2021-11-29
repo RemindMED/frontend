@@ -21,8 +21,6 @@ async function fetchEvents(doctorId) {
 	if (response.status !== 200) return [];
 	var events = await response.json();
 
-	console.log("events", events);
-
 	return events;
 }
 
@@ -63,7 +61,6 @@ function generateEvent(cita) {
 		id: cita.id,
 	};
 
-	console.log("evento crado", generatedEvent);
 	return generatedEvent;
 }
 
@@ -79,11 +76,9 @@ function Citas(props) {
 	}
 
 	function modifyCita(newCita) {
-		console.log("nueva citaaaaa", newCita);
 		setCitas((citas) =>
 			citas.map((cita) => {
 				if (cita.id === newCita.id) {
-					console.log("si entro", cita, newCita, generateEvent(newCita));
 					return generateEvent(newCita);
 				} else {
 					return cita;
@@ -92,8 +87,9 @@ function Citas(props) {
 		);
 	}
 
-	function removeCita(citaID) {
-		setCitas((citas) => (citas.filter((cita) => cita.id !== citaID)));
+	function removeCita(citaid) {
+		setCitas((citas) => (citas.filter((cita) => cita.id !== citaid)));
+		setCitaID("");
 	}
 
 	function closeModal() {
@@ -112,6 +108,8 @@ function Citas(props) {
 	useEffect(() => {
 		async function fetchData() {
 			const eventsData = await fetchEvents(props.ID_Usuario);
+
+			if(!eventsData || !Array.isArray(eventsData)) return;
 
 			let eventList = [];
 
@@ -145,7 +143,6 @@ function Citas(props) {
 					events={citas}
 					defaultDate={new Date()}
 					onSelectEvent={(event) => {
-						console.log(event.id, event)
 						changeCitaID(event.id);
 						openModal();
 					}}

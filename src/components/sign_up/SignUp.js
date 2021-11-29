@@ -278,8 +278,6 @@ function SignUp(props) {
 												);
 												const json = await data.json();
 
-												console.log(json);
-
 												if (data.status === 200) {
 													props.saveUserSession(
 														json.doctorId,
@@ -292,7 +290,6 @@ function SignUp(props) {
 													data.status === 404 ||
 													data.status === 400
 												) {
-													console.log(json);
 													setAlertState({
 														...alertState,
 														openError: true,

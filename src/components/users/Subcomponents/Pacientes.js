@@ -8,8 +8,6 @@ import ModalBorrarUsuarioCon from "./ModalBorrarUsuarioCon";
 import api from "../../shared_components/APIConfig";
 
 async function fetchUsers(doctorId) {
-	console.log("doctor id", doctorId);
-
 	var response = await fetch(api.url + "/getPacientes?doctorId=" + doctorId, {
 		method: "get",
 		headers: { "Content-Type": "application/json" },
@@ -22,7 +20,6 @@ async function fetchUsers(doctorId) {
 }
 
 async function deleteUser(userID, removeUser) {
-	console.log("userID", userID);
 	var response = await fetch(api.url + "/deletePaciente?id=" + userID, {
 		method: "delete",
 		headers: { "Content-Type": "application/json" },
@@ -100,12 +97,9 @@ function Pacientes(props) {
 	}
 
 	function modifyUser(newUser) {
-		console.log("ahhhhhhh", newUser, state.users);
 		setState((state) => ({
 			users: state.users.map((user) => {
-				console.log(user);
 				if (user.id === newUser.id) {
-					console.log("siuuuuuuuuu");
 					return newUser;
 				} else {
 					return user;

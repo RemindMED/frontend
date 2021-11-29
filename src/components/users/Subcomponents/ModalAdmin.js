@@ -13,6 +13,8 @@ import "../Styles/ModalAdmin.css";
 import FotoUsuarioModal from "./FotoUsuarioModal";
 import api from "../../shared_components/APIConfig";
 import "../../shared_components/Styles/Boton.css";
+import moment from "moment";
+
 
 async function fetchUser(userID) {
 	var response = await fetch(api.url + "/getPaciente?id=" + userID, {
@@ -94,7 +96,6 @@ function ModalAdmin(props) {
 	function updateAge(birthday) {
 		const age = calculateAge(birthday);
 		setStateUser({ ...stateUser,fechaNacimiento: birthday, edad: age+" año(s)" });
-		console.log(stateUser);
 	}
 
 	function calculateAge(birthday) {
@@ -110,7 +111,6 @@ function ModalAdmin(props) {
 	}
 
 	function handleSelect(event, data, name) {
-		console.log(event, data, name, "\n\n\n\n\n");
 		setStateUser({ ...stateUser, [name]: data.value });
 	}
 
@@ -120,7 +120,6 @@ function ModalAdmin(props) {
 			const userData = await fetchUser(props.userID);
 			if (!userData) return;
 			const age = calculateAge(userData.fechaNacimiento);
-			console.log(age);
 			setStateUser({
 				nombre: validateData(userData.nombre),
 				apellido: validateData(userData.apellido),
@@ -335,6 +334,8 @@ function ModalAdmin(props) {
 										}}
 										value={stateUser.fechaNacimiento}
 										type="date"
+										
+										max={moment().format("YYYY-MM-DD")}
 									/>
 								</div>
 								<div className="block2RG">
@@ -405,8 +406,6 @@ function ModalAdmin(props) {
 									);
 								}
 							} else {
-								console.log(stateUser);
-
 								const a = await createUser(
 									{ doctorId: props.doctorId, ...stateUser },
 									props.addUser

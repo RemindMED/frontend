@@ -14,6 +14,7 @@ import "./Styles/ModalCita.css";
 import api from "../../../shared_components/APIConfig";
 import "../../../shared_components/Styles/Boton.css";
 import Datetime from "react-datetime";
+import moment from "moment";
 
 async function fetchCita(citaID) {
 	var response = await fetch(api.url + "/getCita?id=" + citaID, {
@@ -24,11 +25,10 @@ async function fetchCita(citaID) {
 	if (response.status !== 200) return null;
 	var cita = await response.json();
 
-    let date = null;
-    try {
+	let date = null;
+	try {
 		date = new Date(cita.horario._seconds * 1000);
-	} catch(e) {}
-
+	} catch (e) {}
 
 	cita.horario = date || new Date(cita.horario);
 
@@ -36,8 +36,6 @@ async function fetchCita(citaID) {
 }
 
 async function fetchPacientes(doctorId) {
-	console.log("doctor id", doctorId);
-
 	var response = await fetch(api.url + "/getPacientes?doctorId=" + doctorId, {
 		method: "get",
 		headers: { "Content-Type": "application/json" },
@@ -87,13 +85,15 @@ async function createCita(citaData, addCita) {
 }
 
 async function deleteCita(citaID, removeCita) {
-	console.log("citaID", citaID);
 	var response = await fetch(api.url + "/deleteCita?id=" + citaID, {
 		method: "delete",
 		headers: { "Content-Type": "application/json" },
 	});
 
-	if (response.status !== 200) return false;
+	if (response.status !== 200) {
+		return false
+	};
+
 	removeCita(citaID);
 
 	return true;
@@ -139,6 +139,7 @@ function ModalCita(props) {
 			setPacienteOptions(pacientes);
 			if (!props.citaID) return;
 			const cita = await fetchCita(props.citaID);
+			if (!cita) return;
 			setStateUser(cita);
 		}
 		fetchData();
@@ -244,6 +245,14 @@ function ModalCita(props) {
 												horario: event.toDate(),
 											});
 										}}
+										inputProps={{
+											onKeyDown: (e) => {
+												e.preventDefault();
+											},
+										}}
+										isValidDate={(current) => {
+											return current.isAfter(moment ().subtract(1, 'days'));
+										}}
 									/>
 								</div>
 							</div>
@@ -288,6 +297,7 @@ function ModalCita(props) {
 								} else {
 									setMessage("La cita no pudo ser borrada.");
 								}
+
 								setSecondOpen(true);
 							}}
 						>
@@ -319,7 +329,6 @@ function ModalCita(props) {
 						color="green"
 						inverted
 						onClick={async () => {
-							console.log(stateCita);
 							if (
 								stateCita.nombre &&
 								stateCita.pacienteId &&
@@ -337,11 +346,11 @@ function ModalCita(props) {
 									setSuccess(success);
 									if (success) {
 										setMessage(
-											"Actualizacion de datos del usuario exitosa!"
+											"Actualizacion de datos de la cita exitosa!"
 										);
 									} else {
 										setMessage(
-											"Ha ocurrido un error al actualizar el usuario! Verifique que el correo sea unico."
+											"Ha ocurrido un error al actualizar la cita.  El horario seleccionado se encuentra ocupado."
 										);
 									}
 								} else {
@@ -356,11 +365,11 @@ function ModalCita(props) {
 
 									if (success) {
 										setMessage(
-											"Se ha creado el usuario de manera exitosa!"
+											"Se ha creado la cita de manera exitosa!"
 										);
 									} else {
 										setMessage(
-											"Ha ocurrido un error al crear el usuario! Verifique que el correo sea unico."
+											"Ha ocurrido un error al crear la cita! El horario seleccionado se encuentra ocupado."
 										);
 									}
 								}
@@ -377,7 +386,7 @@ function ModalCita(props) {
 						}}
 					>
 						<Icon name="checkmark" />{" "}
-						{props.citaID ? "Guardar" : "Registrar"}
+						{props.citaID ? "Guardar" : "Crear cita"}
 					</Button>
 				</Modal.Actions>
 				<Modal
@@ -385,7 +394,7 @@ function ModalCita(props) {
 					open={secondOpen}
 					size="small"
 				>
-					<Modal.Header>Registro de usuario</Modal.Header>
+					<Modal.Header>Registro de cita</Modal.Header>
 					<Modal.Content>
 						<p>{message}</p>
 					</Modal.Content>

@@ -38,8 +38,6 @@ function MenuUsuario(props) {
 		setForegroundState({ [name]: "#000" });
 	}
 
-	console.log(props.ID_Usuario);
-
 	return (
 		<div className="menuUsuarioContainer">
 			<div className="sideBarContainer">
@@ -108,7 +106,7 @@ function MenuUsuario(props) {
 							style={{ color: "red" }}
 							type="button"
 							className="btnMenuUsuario"
-							value="Log out"
+							value="Cerrar sesión"
 							onClick={logoutSession}
 						/>
 					</div>

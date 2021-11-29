@@ -204,8 +204,6 @@ function Login(props) {
 											name="submit"
 											value="Enviar"
 											onClick={async () => {
-												console.log("hola");
-
 												const auth = getAuth(app);
 												signInWithEmailAndPassword(
 													auth,
@@ -216,8 +214,6 @@ function Login(props) {
 														// Signed in
 														const user =
 															userCredential.user;
-
-                                                        console.log(user);
 
 														props.saveUserSession(
 															user.uid,
